@@ -1,11 +1,16 @@
 <template>
   <div id="app">
+    <navigator></navigator>
     <router-view />
   </div>
 </template>
 
 <script>
+import navigator from './components/navigation.vue'
 export default {
+  components: {
+    navigator
+  },
   name: 'App'
 }
 </script>
@@ -19,5 +24,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
 }
 </style>

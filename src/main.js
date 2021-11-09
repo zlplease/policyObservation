@@ -7,6 +7,10 @@ import router from "./router";
 Vue.config.productionTip = false;
 import dataV from "@jiaminghi/data-view";
 
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
+
+Vue.use(Antd)
 Vue.use(dataV);
 
 /* eslint-disable no-new */
