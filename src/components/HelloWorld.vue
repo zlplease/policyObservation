@@ -1,14 +1,16 @@
 <template>
   <div class="hello">
     <div class="test">
-      <chineseMap @province_selected="selectProvince" 
+      <chineseMap @province_selected="selectProvince"
                   @province_hovered="hoverProvince"
                   @coordinate="coordinate"
                   @leave="leave"
                   class="chineseMap">
       </chineseMap>
     </div>
-    <div v-if="this.infoShow" class="provinceInfo" :style="{top: infoY + 'px', left: infoX + 'px'}">
+    <div v-if="this.infoShow"
+         class="provinceInfo"
+         :style="{top: infoY + 'px', left: infoX + 'px'}">
       hhh
     </div>
   </div>
@@ -29,17 +31,17 @@ export default {
     }
   },
   methods: {
-    selectProvince(data) {
+    selectProvince (data) {
       // console.log(data)
     },
-    hoverProvince(data) {
+    hoverProvince (data) {
       this.infoShow = true
     },
-    coordinate(x, y) {
+    coordinate (x, y) {
       this.infoX = x
       this.infoY = y
     },
-    leave() {
+    leave () {
       this.infoShow = false
     }
   }

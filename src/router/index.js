@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import HelloWorld from "@/components/HelloWorld";
-import BigData1 from "@/components/BigData1";
+import BigData1 from "@/views/BigData1";
 
 Vue.use(Router);
 
