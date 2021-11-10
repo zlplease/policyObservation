@@ -122,7 +122,7 @@ export default {
 </script>
 <style lang='scss' scoped>
 .totalContainerBorder {
-  height: 15%;
+  height: 12%;
   .totalContainer {
     display: flex;
     height: 100%;
@@ -131,16 +131,16 @@ export default {
       flex: 1;
       display: flex;
       flex-direction: column;
-      height: 90%;
+      height: 80%;
       justify-content: center;
       align-items: center;
-      border-left: 2px solid #061e5d;
-      border-right: 2px solid #061e5d;
+      border-left: 1.5px solid #061e5d;
+      border-right: 1.5px solid #061e5d;
       .title {
-        font-size: 20px;
+        font-size: 18px;
       }
       .flop {
-        font-size: 20px;
+        font-size: 18px;
       }
     }
   }

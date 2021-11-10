@@ -82,10 +82,6 @@ export default {
 
   components: {},
 
-  computed: {},
-
-  mounted: {},
-
   methods: {}
 }
 
@@ -102,6 +98,7 @@ export default {
   .title {
     text-align: center;
     margin-top: 2vh;
+    font-size: 18px;
   }
   .chart {
     margin-top: 5vh;

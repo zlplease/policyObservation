@@ -11,6 +11,7 @@
         <revenue></revenue>
         <div class="rightContainer">
           <total></total>
+          <hotWords></hotWords>
         </div>
       </div>
     </dv-full-screen-container>
@@ -21,11 +22,13 @@
 import headerPolicy from '../components/BigData1/headerPolicy.vue'
 import revenue from '../components/BigData1/revenue.vue'
 import total from '../components/BigData1/total.vue'
+import hotWords from '../components/BigData1/hotWords.vue'
 export default {
   name: 'BigData1',
-  components: { headerPolicy, revenue, total },
+  components: { headerPolicy, revenue, total, hotWords },
   data () {
     return {
+      isLoading: false
     }
   },
   methods: {
@@ -56,8 +59,8 @@ export default {
   width: 100%;
   display: flex;
   .rightContainer {
-    margin-left: 2vw;
-    width: 77%;
+    margin-left: 1vw;
+    width: 78%;
     height: 100%;
   }
 }
