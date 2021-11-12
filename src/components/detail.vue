@@ -12,16 +12,12 @@
       <div class="rankTable">
         <a-table :columns="columns" 
                  :data-source="rank"
-                 :pagination="{ pageSize: 5 }"
-                 :loading="loading"
+                 :pagination="{ pageSize: 8 }"
                  size="small"
                  >
           <a slot="name" slot-scope="text">{{ text }}</a>
         </a-table>
       </div>
-    </div>
-    <div class="hot">
-      <div class="title">政策热点</div>
     </div>
   </div>
 </template>
@@ -96,6 +92,34 @@ export default {
           newPolicy: 1256,
           total: 87856
         },
+        {
+          key: '7',
+          rank: 7,
+          province: '北京',
+          newPolicy: 1256,
+          total: 87856
+        },
+        {
+          key: '8',
+          rank: 8,
+          province: '北京',
+          newPolicy: 1256,
+          total: 87856
+        },
+        {
+          key: '9',
+          rank: 9,
+          province: '北京',
+          newPolicy: 1256,
+          total: 87856
+        },
+        {
+          key: '10',
+          rank: 10,
+          province: '北京',
+          newPolicy: 1256,
+          total: 87856
+        },
       ]
     };
   },
@@ -118,9 +142,16 @@ export default {
 
 .rankTable {
   margin-top: 12px;
+  height: 400px;
+  position: relative;
 }
 
 .ant-table-thead {
   height: 30px !important;
+}
+
+.ant-pagination {
+  position: absolute;
+  bottom: 0;
 }
 </style>

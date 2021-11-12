@@ -21,6 +21,22 @@
         <dataDetail class="detail"></dataDetail>
       </div>
     </div>
+    <div class="hotPoint">
+      <div class="title">
+        <img src="../assets/hot.png" class="icon" />
+        <div class="name">政策热点</div>
+      </div>
+      <div class="policyList">
+        <a-carousel autoplay vertical>
+          <div v-for="(obj, key) in policies" :key="key" class="list">
+            <div class="place">{{obj.place}}</div>
+            <div class="title1">{{obj.title}}</div>
+            <div class="about">{{obj.about}}</div>
+            <div class="content">{{obj.content}}</div>
+          </div>
+        </a-carousel>
+      </div>
+    </div>
     <div
       v-if="this.infoShow"
       class="provinceInfo"
@@ -51,7 +67,7 @@ export default {
   name: "HelloWorld",
   components: {
     chineseMap,
-    dataDetail
+    dataDetail,
   },
   data() {
     return {
@@ -59,6 +75,21 @@ export default {
       infoX: 0,
       infoY: 0,
       nowProvince: "",
+      policies: [
+        {
+          place: "【福州】",
+          about: "软工",
+          title: '软工好苦',
+          content:
+            "说实话学前端以来第一次做出这么丑的玩意，也是第一次在项目里写这么多奇怪的js，之前都是在写业务逻辑，游戏逻辑完全没有接触过，比想象中的复杂得多，接下来还要做另一门课的坦克大战，实时刷新的前提下想必会比现在还麻烦。本来我是很喜欢做动画、写交互的，但是遇到了许多问题。首先是监听请求已经浪费了过多的运存，导致游戏有些卡卡的了，在此基础上加上动画可能会导致运存过大强制结束等等。然后是由于本人实在不熟悉微信小程序的开发环境，没有dom，更没有jQuery，只能调用微信小程序的方法animation或者用CSS@keyframe动画，经过3天国庆30小时爆肝，现在已经看见这个界面就有些难受",
+        },
+        {
+          place: "【上海】",
+          about: '住房',
+          title: '房价好贵',
+          content: "买不起买不起买不起买不起买不起买不起买不起买不起买不起买不起买不起买不起,wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买"
+        },
+      ],
     };
   },
   methods: {
@@ -111,6 +142,7 @@ export default {
     margin-top: 20px;
 
     .headline {
+      margin-bottom: 32px;
       display: flex;
 
       .icon {
@@ -127,10 +159,13 @@ export default {
   }
 
   .center {
-    width: 80%;
+    width: 90%;
     display: flex;
     .chineseMap {
       width: 50%;
+    }
+    .detail {
+      margin-left: 32px;
     }
   }
 
@@ -170,5 +205,64 @@ export default {
       }
     }
   }
+}
+
+.hotPoint {
+  margin: 0 5%;
+  margin-top: 32px;
+  .title {
+    display: flex;
+    align-items: center;
+    .icon {
+      width: 28px;
+      height: 28px;
+    }
+    .name {
+      padding-left: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+}
+
+.policyList {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .list {
+    width: 1000px;
+    height: 200px;
+    border-radius: 12px;
+    background-color: #ececec;
+    padding: 8px 5px;
+    .place {
+      color: #417ce9;
+      font-weight: bold;
+      font-size: 24px;
+    }
+    .title1 {
+      text-align: center;
+      font-size: 18px;
+      color: #969696;
+      font-weight: 700;
+    }
+    .about {
+      text-align: center;
+      color: #969696;
+    }
+    .content {
+      font-size: 14px;
+    }
+  }
+}
+
+.ant-carousel >>> .slick-slide {
+  height: 200px;
+  overflow: hidden;
+}
+
+.ant-carousel >>> .slick-slide h3 {
+  color: #fff;
 }
 </style>

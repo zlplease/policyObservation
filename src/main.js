@@ -9,6 +9,9 @@ import dataV from "@jiaminghi/data-view";
 
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
+import vuescroll from "vuescroll";//引入vuescroll
+import "vuescroll/dist/vuescroll.css";//引入vuescroll样式
+Vue.use(vuescroll);
 
 Vue.use(Antd)
 Vue.use(dataV);
