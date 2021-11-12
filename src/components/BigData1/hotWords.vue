@@ -12,20 +12,20 @@
                                style="width:200px;height:200px" />
         </div>
       </dv-border-box-7>
-      <!-- <dv-border-box-7 :color="['rgb(16,11,56)','#77dff5']"
+      <dv-border-box-7 :color="['rgb(16,11,56)','#77dff5']"
                        class="totalContainer">
         <dv-scroll-board :config="total" />
       </dv-border-box-7>
-      <dv-border-box-7 :color="['rgb(16,11,56)','#77dff5']"
+      <!-- <dv-border-box-7 :color="['rgb(16,11,56)','#77dff5']"
                        class="proportionContainer">
         <div class="proportion">
           <div class="title">全国热词分布Top5</div>
           <dv-active-ring-chart :config="proportion"
                                 style="width:300px;height:300px" />
         </div>
-      </dv-border-box-7>
+      </dv-border-box-7> -->
     </div>
-    <div class="bottomContainer">
+    <!-- <div class="bottomContainer">
       <dv-border-box-8 v-for="i in index"
                        :key="i"
                        class="border">
@@ -52,8 +52,8 @@
             </div>
           </div>
         </div>
-      </dv-border-box-8> -->
-    </div>
+      </dv-border-box-8>
+    </div> -->
   </div>
 </template>
 
@@ -311,6 +311,7 @@ export default {
       this.proportion.data = this.hotWordsData[0].hotWords;
       for (let i = 0; i < 5; i++) {
         this.items[i].series[0].data[0].value = this.hotWordsData[0].hotWordsitems[i];
+        this.items[i] = { ...this.items[i] };
       }
 
       this.proportion = { ...this.proportion }
