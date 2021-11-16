@@ -231,7 +231,7 @@ export default {
   justify-content: center;
   align-items: center;
   .list {
-    width: 1000px;
+    width: 800px;
     height: 200px;
     border-radius: 12px;
     background-color: #ececec;
