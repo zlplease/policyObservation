@@ -25,7 +25,7 @@
         </div>
       </dv-border-box-7>
     </div>
-    <!-- <div class="bottomContainer">
+    <div class="bottomContainer">
       <dv-border-box-8 v-for="i in index"
                        :key="i"
                        class="border">
@@ -53,7 +53,7 @@
           </div>
         </div>
       </dv-border-box-8>
-    </div> -->
+    </div>
   </div>
 </template>
 
