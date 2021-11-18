@@ -114,11 +114,11 @@ export default {
 <style lang="scss" scoped>
 .Home {
   width: 100%;
-  height: 100%;
+  // height: 80%;
 
   .swiper {
     width: 100%;
-    height: 24%;
+    height: 160px;
     background-image: url("../assets/bg.jpg");
     background-size: 100% 128%;
     display: flex;
@@ -208,8 +208,7 @@ export default {
 }
 
 .hotPoint {
-  margin: 0 5%;
-  margin-top: 32px;
+  margin: 32px 5%;
   .title {
     display: flex;
     align-items: center;
@@ -226,7 +225,7 @@ export default {
 }
 
 .policyList {
-  margin-top: 12px;
+  margin: 12px;
   display: flex;
   justify-content: center;
   align-items: center;

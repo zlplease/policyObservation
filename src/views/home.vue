@@ -1,0 +1,91 @@
+<template>
+  <div class="home">
+    <div class="menu">
+      <img src="../assets/logo.png" alt="" />
+      <div class="productName">见政</div>
+      <div
+        class="item"
+        :class="{ selected: page == item }"
+        @click="choose(item)"
+        v-for="item in items"
+        :key="item.code"
+      >
+        {{ item }}
+      </div>
+    </div>
+    <Home v-if="page == '首页'"></Home>
+    <search v-if="page == '政策检索'"></search>
+  </div>
+</template>
+
+<script>
+import Home from "../components/Home.vue";
+import search from "../components/search.vue";
+export default {
+  components: {
+    Home,
+    search,
+  },
+  name: "home",
+  data() {
+    return {
+      items: ["首页", "政策检索", "政策大数据平台"],
+      page: "首页",
+    };
+  },
+  methods: {
+    choose(item) {
+      if (item == "政策大数据平台") {
+        console.log("跳转大数据平台");
+        let routeOne = this.$router.resolve({
+          name: "BigData",
+          path: '/BigData1'
+        });
+        window.open(routeOne.href, "_blank");
+      } else {
+        this.page = item;
+      }
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f6fc;
+  .menu {
+    align-items: center;
+    height: 48px;
+    display: flex;
+    width: 80%;
+    background-color: white;
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+  .productName {
+    margin-left: 12px;
+    margin-right: auto;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .item {
+    height: 64px;
+    padding: 0 16px;
+    text-align: center;
+    line-height: 64px;
+    margin-right: 12px;
+    color: black;
+  }
+}
+
+.selected {
+  background-color: #417ce9;
+  color: white !important;
+  font-weight: bold;
+}
+</style>

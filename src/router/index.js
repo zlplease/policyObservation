@@ -1,8 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import search from "@/components/search";
 import BigData1 from "@/views/BigData1";
-import Home from "@/components/Home";
+import home from "@/views/home";
 
 Vue.use(Router);
 
@@ -10,13 +9,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "search",
-      component: search
-    },
-    {
-      path: "/Home",
-      name: "Home",
-      component: Home
+      name: "home",
+      component: home
     },
     {
       path: "/BigData1",

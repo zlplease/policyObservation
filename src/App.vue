@@ -1,16 +1,11 @@
 <template>
   <div id="app">
-    <!-- <navigator></navigator> -->
     <router-view />
   </div>
 </template>
 
 <script>
-import navigator from './components/navigation.vue'
 export default {
-  components: {
-    navigator
-  },
   name: 'App'
 }
 </script>

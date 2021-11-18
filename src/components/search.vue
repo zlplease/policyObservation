@@ -194,13 +194,12 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: #f4f6fc;
   .top {
     margin-top: 24px;
     width: 80%;
     background-color: white;
     border-radius: 12px;
-    box-shadow: 41px 41px 82px #cfd1d6, -41px -41px 82px #ffffff;
+    box-shadow: 41px 41px 82px #cfd1d6;
     padding: 10px 15px;
 
     .title {
