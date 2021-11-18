@@ -39,7 +39,7 @@ export default {
         },
         {
           province: '福建',
-          number: [118024],
+          number: [118023],
           content: '{nt}'
         },
         {
