@@ -1,15 +1,14 @@
 <template>
   <div class="home">
     <div class="menu">
-      <img src="../assets/logo.png" alt="" />
+      <img src="../assets/logo.png"
+           alt="" />
       <div class="productName">见政</div>
-      <div
-        class="item"
-        :class="{ selected: page == item }"
-        @click="choose(item)"
-        v-for="item in items"
-        :key="item.code"
-      >
+      <div class="item"
+           :class="{ selected: page == item }"
+           @click="choose(item)"
+           v-for="item in items"
+           :key="item.code">
         {{ item }}
       </div>
     </div>
@@ -27,14 +26,14 @@ export default {
     search,
   },
   name: "home",
-  data() {
+  data () {
     return {
       items: ["首页", "政策检索", "政策大数据平台"],
       page: "首页",
     };
   },
   methods: {
-    choose(item) {
+    choose (item) {
       if (item == "政策大数据平台") {
         console.log("跳转大数据平台");
         let routeOne = this.$router.resolve({
@@ -51,6 +50,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .home {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,8 +59,10 @@ export default {
     align-items: center;
     height: 48px;
     display: flex;
-    width: 80%;
+    width: 100%;
+    padding: 0 10%;
     background-color: white;
+    box-shadow: 41px 41px 82px #cfd1d6;
     img {
       width: 40px;
       height: 40px;
@@ -74,12 +76,18 @@ export default {
     font-weight: bold;
   }
   .item {
-    height: 64px;
+    height: 48px;
     padding: 0 16px;
     text-align: center;
-    line-height: 64px;
+    line-height: 48px;
     margin-right: 12px;
     color: black;
+    &:hover {
+      background: #bad0fc;
+      transition: 0.5s;
+      color: white;
+      cursor: pointer;
+    }
   }
 }
 

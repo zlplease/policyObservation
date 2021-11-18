@@ -5,33 +5,25 @@
       <div class="area">
         <div class="name">地区范围:</div>
         <div>
-          <a-select
-            class="select"
-            default-value="福建"
-            style="width: 120px"
-            @change="handleChange"
-          >
-            <a-select-option
-              :value="item"
-              v-for="item in province"
-              :key="item.code"
-            >
+          <a-select class="select"
+                    default-value="福建"
+                    style="width: 120px"
+                    @change="handleChange">
+            <a-select-option :value="item"
+                             v-for="item in province"
+                             :key="item.code">
               {{ item }}
             </a-select-option>
           </a-select>
         </div>
         <div>
-          <a-select
-            class="select"
-            :default-value="city"
-            style="width: 120px"
-            @change="handleChange"
-          >
-            <a-select-option
-              :value="item"
-              v-for="item in city"
-              :key="item.code"
-            >
+          <a-select class="select"
+                    :default-value="city"
+                    style="width: 120px"
+                    @change="handleChange">
+            <a-select-option :value="item"
+                             v-for="item in city"
+                             :key="item.code">
               {{ item }}
             </a-select-option>
           </a-select>
@@ -39,25 +31,21 @@
       </div>
       <div class="source">
         <div class="name">信息来源:</div>
-        <div
-          class="from"
-          :class="{ selected: selectFrom == item }"
-          v-for="(item, key) in source"
-          :key="key"
-          @click="choose(item)"
-        >
+        <div class="from"
+             :class="{ selected: selectFrom == item }"
+             v-for="(item, key) in source"
+             :key="key"
+             @click="choose(item)">
           {{ item }}
         </div>
       </div>
       <div class="industries">
         <div class="name">相关产业:</div>
-        <div
-          class="industry"
-          :class="{ selected: selectIndustry == item }"
-          v-for="item in industry"
-          :key="item.key"
-          @click="choose1(item)"
-        >
+        <div class="industry"
+             :class="{ selected: selectIndustry == item }"
+             v-for="item in industry"
+             :key="item.key"
+             @click="choose1(item)">
           {{ item }}
         </div>
       </div>
@@ -68,19 +56,17 @@
       </div>
     </div>
     <div class="bottom">
-      <a-table
-        :columns="columns"
-        :data-source="dataInfo"
-        :pagination="{ pageSize: 10 }"
-        :scroll="{ y: 240 }"
-      />
+      <a-table :columns="columns"
+               :data-source="dataInfo"
+               :pagination="{ pageSize: 10 }"
+               :scroll="{ y: 240 }" />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       province: ["北京", "上海", "河北", "辽宁", "吉林", "福建"],
       city: ["福州", "厦门", "莆田"],
@@ -104,84 +90,84 @@ export default {
           dataIndex: "date",
         },
       ],
-     dataInfo: [
-       {
-         key: 0,
-         name: '进口货物提前报关奖励',
-         source: '福州市商务局',
-         date: '2021.11.01'
-       },
-       {
-         key: 1,
-         name: 'VR产业集聚发展补助',
-         source: '福州市经济和信息化委员会',
-         date: '2021.11.02'
-       },
-       {
-         key: 2,
-         name: '工业重点项目',
-         source: '福州市工业和信息化局',
-         date: '2021.11.12'
-       },
-       {
-         key: 3,
-         name: '优势、示范企业奖励',
-         source: '福州市科学技术局',
-         date: '2021.11.02'
-       },
-       {
-         key: 4,
-         name: '企业技改项目完工投产奖励',
-         source: '福州市工业和信息化局',
-         date: '2021.11.03'
-       },
-       {
-         key: 5,
-         name: '疫情防控重点保障物资生产企业',
-         source: '福州市经济和信息化委员会',
-         date: '2021.11.04'
-       },
-       {
-         key: 6,
-         name: '民营企业创建高水平创新平台',
-         source: '福州市发展和改革委员会',
-         date: '2021.11.05'
-       },
-       {
-         key: 7,
-         name: '进口货物提前报关奖励',
-         source: '福州市科学技术局',
-         date: '2021.11.04'
-       },
-       {
-         key: 8,
-         name: '进口货物提前报关奖励',
-         source: '福州市商务局',
-         date: '2021.11.05'
-       },
-       {
-         key: 9,
-         name: '进口货物提前报关奖励',
-         source: '福州市商务局',
-         date: '2021.11.06'
-       },
-       {
-         key: 10,
-         name: '进口货物提前报关奖励',
-         source: '福州市商务局',
-         date: '2021.11.08'
-       },
-     ]
+      dataInfo: [
+        {
+          key: 0,
+          name: '进口货物提前报关奖励',
+          source: '福州市商务局',
+          date: '2021.11.01'
+        },
+        {
+          key: 1,
+          name: 'VR产业集聚发展补助',
+          source: '福州市经济和信息化委员会',
+          date: '2021.11.02'
+        },
+        {
+          key: 2,
+          name: '工业重点项目',
+          source: '福州市工业和信息化局',
+          date: '2021.11.12'
+        },
+        {
+          key: 3,
+          name: '优势、示范企业奖励',
+          source: '福州市科学技术局',
+          date: '2021.11.02'
+        },
+        {
+          key: 4,
+          name: '企业技改项目完工投产奖励',
+          source: '福州市工业和信息化局',
+          date: '2021.11.03'
+        },
+        {
+          key: 5,
+          name: '疫情防控重点保障物资生产企业',
+          source: '福州市经济和信息化委员会',
+          date: '2021.11.04'
+        },
+        {
+          key: 6,
+          name: '民营企业创建高水平创新平台',
+          source: '福州市发展和改革委员会',
+          date: '2021.11.05'
+        },
+        {
+          key: 7,
+          name: '进口货物提前报关奖励',
+          source: '福州市科学技术局',
+          date: '2021.11.04'
+        },
+        {
+          key: 8,
+          name: '进口货物提前报关奖励',
+          source: '福州市商务局',
+          date: '2021.11.05'
+        },
+        {
+          key: 9,
+          name: '进口货物提前报关奖励',
+          source: '福州市商务局',
+          date: '2021.11.06'
+        },
+        {
+          key: 10,
+          name: '进口货物提前报关奖励',
+          source: '福州市商务局',
+          date: '2021.11.08'
+        },
+      ]
     };
   },
   methods: {
-    handleChange(value) {
+    handleChange (value) {
       console.log(`selected ${value}`);
     },
-    choose(value) {
+    choose (value) {
       this.selectFrom = value;
     },
-    choose1(value) {
+    choose1 (value) {
       this.selectIndustry = value;
     },
   },
