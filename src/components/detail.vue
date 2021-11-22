@@ -2,20 +2,21 @@
   <div class="detail">
     <div class="timeShow">
       <div class="timeChoose">
-        <a-radio-group :value="date" @change="handleDateChange">
+        <a-radio-group :value="date"
+                       @change="handleDateChange">
           <a-radio-button value="今日"> 今日 </a-radio-button>
           <a-radio-button value="昨日"> 昨日 </a-radio-button>
           <a-radio-button value="最近7日"> 最近7日 </a-radio-button>
         </a-radio-group>
-        <a-date-picker @change="onChange" />
+        <a-range-picker @change="onChange" />
       </div>
       <div class="rankTable">
-        <a-table :columns="columns" 
+        <a-table :columns="columns"
                  :data-source="rank"
                  :pagination="{ pageSize: 8 }"
-                 size="small"
-                 >
-          <a slot="name" slot-scope="text">{{ text }}</a>
+                 size="small">
+          <a slot="name"
+             slot-scope="text">{{ text }}</a>
         </a-table>
       </div>
     </div>
@@ -24,7 +25,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       date: "今日",
       columns: [
@@ -54,63 +55,63 @@ export default {
           key: '1',
           rank: 1,
           province: '北京',
-          newPolicy: 1256,
-          total: 87856
+          newPolicy: 316816,
+          total: 8785613
         },
         {
           key: '2',
           rank: 2,
-          province: '北京',
-          newPolicy: 1256,
-          total: 87856
+          province: '浙江',
+          newPolicy: 212518,
+          total: 3878510
         },
         {
           key: '3',
           rank: 3,
-          province: '北京',
-          newPolicy: 1256,
-          total: 87856
+          province: '福建',
+          newPolicy: 148261,
+          total: 2719411
         },
         {
           key: '4',
           rank: 4,
-          province: '北京',
-          newPolicy: 1256,
-          total: 87856
+          province: '广东',
+          newPolicy: 112561,
+          total: 2419311
         },
         {
           key: '5',
           rank: 5,
-          province: '北京',
-          newPolicy: 1256,
-          total: 87856
+          province: '上海',
+          newPolicy: 81847,
+          total: 194739
         },
         {
           key: '6',
           rank: 6,
-          province: '北京',
-          newPolicy: 1256,
-          total: 87856
+          province: '河北',
+          newPolicy: 71852,
+          total: 183196
         },
         {
           key: '7',
           rank: 7,
-          province: '北京',
-          newPolicy: 1256,
-          total: 87856
+          province: '河南',
+          newPolicy: 60913,
+          total: 163126
         },
         {
           key: '8',
           rank: 8,
           province: '北京',
-          newPolicy: 1256,
-          total: 87856
+          newPolicy: 50913,
+          total: 143116
         },
         {
           key: '9',
           rank: 9,
           province: '北京',
-          newPolicy: 1256,
+          newPolicy: 41256,
           total: 87856
         },
         {
@@ -124,10 +125,10 @@ export default {
     };
   },
   methods: {
-    onChange(date, dateString) {
+    onChange (date, dateString) {
       console.log(date, dateString);
     },
-    handleDateChange(e) {
+    handleDateChange (e) {
       this.date = e.target.value;
     },
   },
