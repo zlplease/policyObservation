@@ -19,7 +19,7 @@
       <dv-border-box-7 :color="['rgb(16,11,56)','#77dff5']"
                        class="proportionContainer">
         <div class="proportion">
-          <div class="title">全国热词分布Top5</div>
+          <div class="title">福建热词分布Top5</div>
           <dv-active-ring-chart :config="proportion"
                                 style="width:300px;height:300px" />
         </div>
@@ -135,7 +135,8 @@ export default {
             name: '新能源',
             value: 55
           },
-        ]
+        ],
+        lineWidth: 10,
       },
       items: [{
         series: [

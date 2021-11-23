@@ -2,33 +2,37 @@
   <div class="Home">
     <div class="swiper">
       <div class="slogan">让每个人成为政策的见证者</div>
-      <a-input-search placeholder="请输入关键词" style="width: 320px" />
+      <a-input-search placeholder="请输入关键词"
+                      style="width: 320px" />
     </div>
     <div class="dataCenter">
       <div class="headline">
-        <img src="../assets/data.png" class="icon" />
+        <img src="../assets/data.png"
+             class="icon" />
         <div class="name">政策数据中心</div>
       </div>
       <div class="center">
-        <chineseMap
-          @province_selected="selectProvince"
-          @province_hovered="hoverProvince"
-          @coordinate="coordinate"
-          @leave="leave"
-          class="chineseMap"
-        >
+        <chineseMap @province_selected="selectProvince"
+                    @province_hovered="hoverProvince"
+                    @coordinate="coordinate"
+                    @leave="leave"
+                    class="chineseMap">
         </chineseMap>
         <dataDetail class="detail"></dataDetail>
       </div>
     </div>
     <div class="hotPoint">
       <div class="title">
-        <img src="../assets/hot.png" class="icon" />
+        <img src="../assets/hot.png"
+             class="icon" />
         <div class="name">政策热点</div>
       </div>
       <div class="policyList">
-        <a-carousel autoplay vertical>
-          <div v-for="(obj, key) in policies" :key="key" class="list">
+        <a-carousel autoplay
+                    vertical>
+          <div v-for="(obj, key) in policies"
+               :key="key"
+               class="list">
             <div class="place">{{obj.place}}</div>
             <div class="title1">{{obj.title}}</div>
             <div class="about">{{obj.about}}</div>
@@ -37,11 +41,9 @@
         </a-carousel>
       </div>
     </div>
-    <div
-      v-if="this.infoShow"
-      class="provinceInfo"
-      :style="{ top: infoY + 'px', left: infoX + 'px' }"
-    >
+    <div v-if="this.infoShow"
+         class="provinceInfo"
+         :style="{ top: infoY + 'px', left: infoX + 'px' }">
       <div class="provinceName">
         {{ nowProvince }}
         <div class="decoration"></div>
@@ -69,7 +71,7 @@ export default {
     chineseMap,
     dataDetail,
   },
-  data() {
+  data () {
     return {
       infoShow: false,
       infoX: 0,
@@ -81,7 +83,7 @@ export default {
           about: "软工",
           title: '软工好苦',
           content:
-            "说实话学前端以来第一次做出这么丑的玩意，也是第一次在项目里写这么多奇怪的js，之前都是在写业务逻辑，游戏逻辑完全没有接触过，比想象中的复杂得多，接下来还要做另一门课的坦克大战，实时刷新的前提下想必会比现在还麻烦。本来我是很喜欢做动画、写交互的，但是遇到了许多问题。首先是监听请求已经浪费了过多的运存，导致游戏有些卡卡的了，在此基础上加上动画可能会导致运存过大强制结束等等。然后是由于本人实在不熟悉微信小程序的开发环境，没有dom，更没有jQuery，只能调用微信小程序的方法animation或者用CSS@keyframe动画，经过3天国庆30小时爆肝，现在已经看见这个界面就有些难受",
+            "我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起",
         },
         {
           place: "【上海】",
@@ -93,18 +95,18 @@ export default {
     };
   },
   methods: {
-    selectProvince(data) {
+    selectProvince (data) {
       // console.log(data)
     },
-    hoverProvince(data) {
+    hoverProvince (data) {
       this.infoShow = true;
       this.nowProvince = data;
     },
-    coordinate(x, y) {
+    coordinate (x, y) {
       this.infoX = x + 20;
       this.infoY = y + 20;
     },
-    leave() {
+    leave () {
       this.infoShow = false;
     },
   },
@@ -119,7 +121,7 @@ export default {
   .swiper {
     width: 100%;
     height: 160px;
-    background-image: url("../assets/bg.jpg");
+    background-image: url('../assets/bg.jpg');
     background-size: 100% 128%;
     display: flex;
     flex-direction: column;
