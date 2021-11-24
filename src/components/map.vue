@@ -448,5 +448,11 @@ export default {
       }
     }
   },
+  computed: {
+    provinceInfo: function() {
+      this.provinceInfo = {...this.provinceInfo}
+      return this.provinceInfo
+    }
+  }
 };
 </script>

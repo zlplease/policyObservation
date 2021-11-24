@@ -129,8 +129,8 @@ export default {
       //todo a big  problem
       this.$axios({
         methods: "get",
-        url: "http://39.103.169.155:8080/policy/listAll",
-        data: date,
+        url: "http://39.103.169.155:8080/policy/rank",
+        params: date,
       }).then((res) => {
         console.log(res.data.data);
         this.province = res.data.data;
@@ -141,9 +141,9 @@ export default {
     console.log("hello");
     this.$axios({
       methods: "get",
-      url: "http://39.103.169.155:8080/policy/listAll",
-      data: {
-        endTime: "2021-11-15",
+      url: "http://39.103.169.155:8080/policy/rank",
+      params: {
+        endTime: "2021-11-24",
         startTime: "1900-01-01",
       },
     }).then((res) => {
