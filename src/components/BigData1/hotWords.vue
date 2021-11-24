@@ -92,22 +92,22 @@ export default {
       ],
       index: [0, 1, 2, 3, 4],
       provinces: {
-        province: '广东',
+        province: '福建',
         newPolicy: '998,876',
         data: [42],
         shape: 'round'
       },
       total: {
-        header: ['词汇', '全国出现次数', '广东省出现次数'],
+        header: ['词汇', '福建省出现次数'],
         data: [
-          ['社会保险', '1238292', '9313'],
-          ['环保', '28702312', '1731'],
-          ['拆迁', '1468156', '3612'],
-          ['招商引资', '123594', '12589'],
-          ['事业单位改制', '124893', '12369'],
-          ['残疾人优惠', '123458', '1443'],
-          ['治理雾霾', '1261', '25'],
-          ['降低税款', '123671', '12622']
+          ['社会保险', '9313'],
+          ['环保', '1731'],
+          ['拆迁', '3612'],
+          ['招商引资', '12589'],
+          ['事业单位改制', '12369'],
+          ['残疾人优惠', '1443'],
+          ['治理雾霾', '25'],
+          ['降低税款', '12622']
         ],
         index: true,
         columnWidth: [50],
@@ -314,16 +314,51 @@ export default {
         this.items[i].series[0].data[0].value = this.hotWordsData[0].hotWordsitems[i];
         this.items[i] = { ...this.items[i] };
       }
-
-      this.proportion = { ...this.proportion }
       this.items = { ...this.items }
+      this.proportion = { ...this.proportion }
       this.provinces = { ...this.provinces }
     }
   },
 
-  created: function () {
-    setTimeout(this.change, 2000);
-  },
+  mounted: function () {
+    //这边是设置中间那个排名轮播图的代码哦
+    let that = this
+    this.axios.post('/dpp-theme-word/search/all/word/number')
+      .then(res => {
+        res.data.data.deleteByString()
+        let hotWords = res.data.data.slice(0, 20)
+        for (let i = 0; i < hotWords.length; i++) {
+          hotWords[i] = [hotWords[i].word, hotWords[i].size];
+        }
+        that.total.data = hotWords
+        that.total = { ...that.total }
+        //这边开始设置top5的数据
+        for (let i = 0; i < 5; i++) {
+          that.proportion.data[i] =
+          {
+            name: hotWords[i][0],
+            value: hotWords[i][1]
+          }
+        }
+        that.proportion = { ...that.proportion }
+        //这边是下面的环图
+        let top5 = [];
+        let sum = 0
+        for (let i = 0; i < 5; i++) {
+          top5.push(hotWords[i][1])
+          sum += hotWords[i][1]
+        }
+        for (let i = 0; i < 5; i++) {
+          top5[i] /= sum;
+        }
+        for (let i = 0; i < 5; i++) {
+          that.items[i].series[0].data[0].value = top5[i] * 100
+          that.items[i] = { ...that.items[i] };
+        }
+        that.items = { ...that.items }
+        that.$emit("loadOver", true)
+      })
+  }
 }
 
 </script>

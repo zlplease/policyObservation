@@ -1,9 +1,9 @@
 <template>
   <div class="data-view">
     <dv-full-screen-container class='bc'>
-      <dv-loading v-if="isLoading">
+      <!-- <dv-loading>
         正在加载数据
-      </dv-Loading>
+      </dv-Loading> -->
       <headerPolicy>
       </headerPolicy>
 
@@ -11,7 +11,7 @@
         <revenue></revenue>
         <div class="rightContainer">
           <total></total>
-          <hotWords></hotWords>
+          <hotWords @loadOver="loadOver"></hotWords>
         </div>
       </div>
     </dv-full-screen-container>
@@ -28,11 +28,21 @@ export default {
   components: { headerPolicy, revenue, total, hotWords },
   data () {
     return {
-      isLoading: false
+      totalIsLoading: true,
+      hotWordsIsLoading: false
     }
   },
   methods: {
+    loadOver (data) {
+      this.hotWordsIsLoading = true
+      console.log(this.hotWordsIsLoading)
+    }
   },
+  computed: {
+    isLoading: function () {
+      return this.totalIsLoading && this.hotWordsIsLoading
+    }
+  }
 }
 </script>
 
