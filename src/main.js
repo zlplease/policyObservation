@@ -14,8 +14,10 @@ import "vuescroll/dist/vuescroll.css";//引入vuescroll样式
 
 import axios from "axios";
 import VueAxios from 'vue-axios'
-axios.defaults.baseURL = '122.112.141.60:8080'
+axios.defaults.baseURL = "http://122.112.141.60:8080";
 axios.defaults.headers.post['Content-Type'] = 'application/json'
+
+Vue.prototype.$axios = axios
 
 Vue.use(VueAxios,axios)
 Vue.use(vuescroll);

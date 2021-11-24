@@ -2,48 +2,51 @@
   <div class="Home">
     <div class="swiper">
       <div class="slogan">让每个人成为政策的见证者</div>
-      <a-input-search placeholder="请输入关键词"
-                      style="width: 320px" />
+      <a-input-search placeholder="请输入关键词" style="width: 320px" />
     </div>
     <div class="dataCenter">
       <div class="headline">
-        <img src="../assets/data.png"
-             class="icon" />
+        <img src="../assets/data.png" class="icon" />
         <div class="name">政策数据中心</div>
       </div>
       <div class="center">
-        <chineseMap @province_selected="selectProvince"
-                    @province_hovered="hoverProvince"
-                    @coordinate="coordinate"
-                    @leave="leave"
-                    class="chineseMap">
+        <chineseMap
+          @province_selected="selectProvince"
+          @province_hovered="hoverProvince"
+          @coordinate="coordinate"
+          @leave="leave"
+          class="chineseMap"
+          :provinceInfo="province"
+        >
         </chineseMap>
-        <dataDetail class="detail"></dataDetail>
+        <dataDetail
+          :rank="province"
+          @changeDate="changeDate"
+          class="detail"
+        ></dataDetail>
       </div>
     </div>
     <div class="hotPoint">
       <div class="title">
-        <img src="../assets/hot.png"
-             class="icon" />
+        <img src="../assets/hot.png" class="icon" />
         <div class="name">政策热点</div>
       </div>
       <div class="policyList">
-        <a-carousel autoplay
-                    vertical>
-          <div v-for="(obj, key) in policies"
-               :key="key"
-               class="list">
-            <div class="place">{{obj.place}}</div>
-            <div class="title1">{{obj.title}}</div>
-            <div class="about">{{obj.about}}</div>
-            <div class="content">{{obj.content}}</div>
+        <a-carousel autoplay vertical>
+          <div v-for="(obj, key) in policies" :key="key" class="list">
+            <div class="place">{{ obj.place }}</div>
+            <div class="title1">{{ obj.title }}</div>
+            <div class="about">{{ obj.about }}</div>
+            <div class="content">{{ obj.content }}</div>
           </div>
         </a-carousel>
       </div>
     </div>
-    <div v-if="this.infoShow"
-         class="provinceInfo"
-         :style="{ top: infoY + 'px', left: infoX + 'px' }">
+    <div
+      v-if="this.infoShow"
+      class="provinceInfo"
+      :style="{ top: infoY + 'px', left: infoX + 'px' }"
+    >
       <div class="provinceName">
         {{ nowProvince }}
         <div class="decoration"></div>
@@ -51,12 +54,12 @@
       <div class="info">
         <div class="title">
           政策总数
-          <div class="count">1023441</div>
+          <div class="count">{{ totalNumber }}</div>
         </div>
       </div>
       <div class="info">
         新增政策数
-        <div class="count">12345</div>
+        <div class="count">{{ newAdd }}</div>
       </div>
     </div>
   </div>
@@ -71,44 +74,82 @@ export default {
     chineseMap,
     dataDetail,
   },
-  data () {
+  data() {
     return {
       infoShow: false,
       infoX: 0,
       infoY: 0,
       nowProvince: "",
+      totalNumber: 0,
+      newAdd: 0,
       policies: [
         {
           place: "【福州】",
           about: "软工",
-          title: '软工好苦',
+          title: "软工好苦",
           content:
             "我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起我也买不起",
         },
         {
           place: "【上海】",
-          about: '住房',
-          title: '房价好贵',
-          content: "买不起买不起买不起买不起买不起买不起买不起买不起买不起买不起买不起买不起,wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买"
+          about: "住房",
+          title: "房价好贵",
+          content:
+            "买不起买不起买不起买不起买不起买不起买不起买不起买不起买不起买不起买不起,wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买wzy给我买",
         },
       ],
+      province: [],
     };
   },
   methods: {
-    selectProvince (data) {
+    selectProvince(data) {
       // console.log(data)
     },
-    hoverProvince (data) {
+    hoverProvince(data) {
       this.infoShow = true;
       this.nowProvince = data;
+      var p1 = data.slice(0, 3);
+      var p2 = data.slice(0, 2);
+      var province = this.province;
+      for (var item of province) {
+        if (p1 == item.province || p2 == item.province)
+          this.totalNumber = item.total;
+        this.newAdd = item.policyNum;
+      }
     },
-    coordinate (x, y) {
+    coordinate(x, y) {
       this.infoX = x + 20;
       this.infoY = y + 20;
     },
-    leave () {
+    leave() {
       this.infoShow = false;
     },
+    changeDate(date) {
+      console.log(date);
+      //todo a big  problem
+      this.$axios({
+        methods: "get",
+        url: "http://39.103.169.155:8080/policy/listAll",
+        data: date,
+      }).then((res) => {
+        console.log(res.data.data);
+        this.province = res.data.data;
+      });
+    },
+  },
+  mounted: function () {
+    console.log("hello");
+    this.$axios({
+      methods: "get",
+      url: "http://39.103.169.155:8080/policy/listAll",
+      data: {
+        endTime: "2021-11-15",
+        startTime: "1900-01-01",
+      },
+    }).then((res) => {
+      console.log(res.data.data);
+      this.province = res.data.data;
+    });
   },
 };
 </script>
@@ -121,7 +162,7 @@ export default {
   .swiper {
     width: 100%;
     height: 160px;
-    background-image: url('../assets/bg.jpg');
+    background-image: url("../assets/bg.jpg");
     background-size: 100% 128%;
     display: flex;
     flex-direction: column;
