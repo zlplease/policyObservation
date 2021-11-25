@@ -411,7 +411,30 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    reDraw: function() {
+       let elements = document.getElementsByClassName("province");
+       let self = this;
+       for (let index in elements) {
+      if (elements.hasOwnProperty(index)) {
+        let element = elements[index];
+        var province = element.getAttribute("name");
+        var p1 = province.slice(0, 3);
+        var p2 = province.slice(0, 2);
+        for (var item of this.provinceInfo) {
+          if (p1 == item.province || p2 == item.province)
+            var alpha = item.vitality / 100;
+          if (alpha <= 0.1) {
+            element.style.fill = "#aad5ff";
+          } else {
+            var rgba1 = "rgba(0,0,255," + alpha + ")";
+            element.style.fill = rgba1;
+          }
+        }
+      }
+       }
+    }
+  },
   mounted: function () {
     // console.log(this.provinceInfo)
     let elements = document.getElementsByClassName("province");
@@ -424,14 +447,13 @@ export default {
         var p2 = province.slice(0, 2);
         for (var item of this.provinceInfo) {
           if (p1 == item.province || p2 == item.province)
-            var alpha = item.vitality/100
-            if(alpha <= 0.3) {
-                  console.log(province)
-                  element.style.fill = '#aad5ff'
-            } else {
-                  var rgba1 = 'rgba(0,0,255,'+alpha+')'
-                  element.style.fill = rgba1
-            }
+            var alpha = item.vitality / 100;
+          if (alpha <= 0.1) {
+            element.style.fill = "#aad5ff";
+          } else {
+            var rgba1 = "rgba(0,0,255," + alpha + ")";
+            element.style.fill = rgba1;
+          }
         }
         element.addEventListener("click", function (e) {
           self.$emit("province_selected", e.target.getAttribute("id"));
@@ -448,10 +470,13 @@ export default {
       }
     }
   },
-  computed: {
-    provinceInfo: function() {
-      this.provinceInfo = {...this.provinceInfo}
-      return this.provinceInfo
+  watch: {
+    provinceInfo: {
+      handler(val) {
+        this.provinceInfo = val
+        this.reDraw()
+      },
+      deep: true
     }
   }
 };

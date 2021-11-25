@@ -5,25 +5,33 @@
       <div class="area">
         <div class="name">地区范围:</div>
         <div>
-          <a-select class="select"
-                    default-value="福建"
-                    style="width: 120px"
-                    @change="handleChange">
-            <a-select-option :value="item"
-                             v-for="item in province"
-                             :key="item.code">
+          <a-select
+            class="select"
+            default-value="福建"
+            style="width: 120px"
+            @change="handleChange"
+          >
+            <a-select-option
+              :value="item"
+              v-for="item in province"
+              :key="item.code"
+            >
               {{ item }}
             </a-select-option>
           </a-select>
         </div>
         <div>
-          <a-select class="select"
-                    :default-value="city"
-                    style="width: 120px"
-                    @change="handleChange">
-            <a-select-option :value="item"
-                             v-for="item in city"
-                             :key="item.code">
+          <a-select
+            class="select"
+            :default-value="city"
+            style="width: 120px"
+            @change="handleChange"
+          >
+            <a-select-option
+              :value="item"
+              v-for="item in city"
+              :key="item.code"
+            >
               {{ item }}
             </a-select-option>
           </a-select>
@@ -31,42 +39,64 @@
       </div>
       <div class="source">
         <div class="name">信息来源:</div>
-        <div class="from"
-             :class="{ selected: selectFrom == item }"
-             v-for="(item, key) in source"
-             :key="key"
-             @click="choose(item)">
+        <div
+          class="from"
+          :class="{ selected: selectFrom == item }"
+          v-for="(item, key) in source"
+          :key="key"
+          @click="choose(item)"
+        >
           {{ item }}
         </div>
       </div>
       <div class="industries">
         <div class="name">相关产业:</div>
-        <div class="industry"
-             :class="{ selected: selectIndustry == item }"
-             v-for="item in industry"
-             :key="item.key"
-             @click="choose1(item)">
+        <div
+          class="industry"
+          :class="{ selected: selectIndustry == item }"
+          v-for="item in industry"
+          :key="item.key"
+          @click="choose1(item)"
+        >
           {{ item }}
         </div>
       </div>
       <div class="searchInput">
         <div class="title">关键词</div>
-        <input placeholder="请输入关键词" />
-        <div class="btn">搜素</div>
+        <a-input
+          placeholder="请输入关键词"
+          v-model="keyword"
+          value="keyword"
+          @change="onChange"
+        />
+        <a-button class="btn" @click="search">搜素</a-button>
       </div>
     </div>
     <div class="bottom">
-      <a-table :columns="columns"
-               :data-source="dataInfo"
-               :pagination="{ pageSize: 10 }"
-               :scroll="{ y: 240 }" />
+      <a-table
+        :columns="columns"
+        :data-source="dataInfo"
+        rowKey="{record=>record.id}"
+        :pagination="{ pageSize: 10 }"
+        :scroll="{ y: 240 }"
+      >
+        <div slot="action" slot-scope="text, record">
+          <a-button type="primary" @click="jumpTo(record)">查看详情</a-button>
+        </div>
+      </a-table>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  props: {
+    keyword: {
+      type: String,
+      default: "",
+    },
+  },
+  data() {
     return {
       province: ["北京", "上海", "河北", "辽宁", "吉林", "福建"],
       city: ["福州", "厦门", "莆田"],
@@ -77,99 +107,75 @@ export default {
       columns: [
         {
           title: "政策名称",
-          dataIndex: "name",
+          dataIndex: "title",
           width: 450,
         },
         {
           title: "信息来源",
-          dataIndex: "source",
+          dataIndex: "publicUnit",
           width: 300,
         },
         {
           title: "发布日期",
-          dataIndex: "date",
+          dataIndex: "publicTime",
         },
+        {
+          title: "操作",
+          dataIndex: "operation",
+          scopedSlots: { customRender: 'action' },
+        }
       ],
-      dataInfo: [
-        {
-          key: 0,
-          name: '进口货物提前报关奖励',
-          source: '福州市商务局',
-          date: '2021.11.01'
-        },
-        {
-          key: 1,
-          name: 'VR产业集聚发展补助',
-          source: '福州市经济和信息化委员会',
-          date: '2021.11.02'
-        },
-        {
-          key: 2,
-          name: '工业重点项目',
-          source: '福州市工业和信息化局',
-          date: '2021.11.12'
-        },
-        {
-          key: 3,
-          name: '优势、示范企业奖励',
-          source: '福州市科学技术局',
-          date: '2021.11.02'
-        },
-        {
-          key: 4,
-          name: '企业技改项目完工投产奖励',
-          source: '福州市工业和信息化局',
-          date: '2021.11.03'
-        },
-        {
-          key: 5,
-          name: '疫情防控重点保障物资生产企业',
-          source: '福州市经济和信息化委员会',
-          date: '2021.11.04'
-        },
-        {
-          key: 6,
-          name: '民营企业创建高水平创新平台',
-          source: '福州市发展和改革委员会',
-          date: '2021.11.05'
-        },
-        {
-          key: 7,
-          name: '进口货物提前报关奖励',
-          source: '福州市科学技术局',
-          date: '2021.11.04'
-        },
-        {
-          key: 8,
-          name: '进口货物提前报关奖励',
-          source: '福州市商务局',
-          date: '2021.11.05'
-        },
-        {
-          key: 9,
-          name: '进口货物提前报关奖励',
-          source: '福州市商务局',
-          date: '2021.11.06'
-        },
-        {
-          key: 10,
-          name: '进口货物提前报关奖励',
-          source: '福州市商务局',
-          date: '2021.11.08'
-        },
-      ]
+      dataInfo: [],
     };
   },
   methods: {
-    handleChange (value) {
+    jumpTo(e) {
+      var url = e.url
+      window.open(url,'_blank')
+    },
+    onChange(e) {
+      console.log(e);
+    },
+    handleChange(value) {
       console.log(`selected ${value}`);
     },
-    choose (value) {
+    choose(value) {
       this.selectFrom = value;
+      console.log(value)
     },
-    choose1 (value) {
+    choose1(value) {
       this.selectIndustry = value;
+      console.log(value)
     },
+    search() {
+      var keyword = this.keyword;
+      this.$axios
+        .post(
+          "/dpp-policy/search/title/ByWord",
+          JSON.stringify({
+            page: 1,
+            size: 100,
+            word: keyword,
+          })
+        )
+        .then((res) => {
+          var records = res.data.data.records;
+          var dataInfo = [];
+          for (var item of records) {
+            var temp = {};
+            temp["title"] = item.title;
+            temp["publicUnit"] = item.publicUnit;
+            temp["publicTime"] = item.publicTime;
+            temp["url"] = item.url;
+            dataInfo.push(temp);
+          }
+          this.dataInfo = dataInfo;
+        });
+    },
+  },
+  mounted: function () {
+    console.log("hello");
+    this.search();
   },
 };
 </script>
@@ -264,5 +270,9 @@ export default {
 .selected {
   color: white;
   background-color: #417ce9;
+}
+
+.ant-table-tbody {
+  height: 500px;
 }
 </style>

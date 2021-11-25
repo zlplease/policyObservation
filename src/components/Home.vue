@@ -2,7 +2,7 @@
   <div class="Home">
     <div class="swiper">
       <div class="slogan">让每个人成为政策的见证者</div>
-      <a-input-search placeholder="请输入关键词" style="width: 320px" />
+      <a-input-search placeholder="请输入关键词" style="width: 320px" enter-button @search="onSearch"/>
     </div>
     <div class="dataCenter">
       <div class="headline">
@@ -102,6 +102,9 @@ export default {
     };
   },
   methods: {
+    onSearch(value) {
+      this.$emit('searchKeywords',value)
+    },
     selectProvince(data) {
       // console.log(data)
     },
@@ -112,9 +115,10 @@ export default {
       var p2 = data.slice(0, 2);
       var province = this.province;
       for (var item of province) {
-        if (p1 == item.province || p2 == item.province)
+        if (p1 == item.province || p2 == item.province) {
           this.totalNumber = item.total;
-        this.newAdd = item.policyNum;
+          this.newAdd = item.policyNum;
+        }
       }
     },
     coordinate(x, y) {
@@ -138,7 +142,6 @@ export default {
     },
   },
   mounted: function () {
-    console.log("hello");
     this.$axios({
       methods: "get",
       url: "http://39.103.169.155:8080/policy/rank",
@@ -147,7 +150,6 @@ export default {
         startTime: "1900-01-01",
       },
     }).then((res) => {
-      console.log(res.data.data);
       this.province = res.data.data;
     });
   },

@@ -136,11 +136,42 @@ export default {
         startTime: dateString[0],
         endTime: dateString[1],
       };
-      this.$emit('changeDate',date)
+      this.$emit("changeDate", date);
     },
     handleDateChange(e) {
       this.date = e.target.value;
-      console.log(this.date)
+      console.log(this.date);
+      var day1 = new Date();
+      var date = {};
+      var nowDate = new Date();
+      nowDate.setTime(nowDate.getTime());
+      var nowDate =
+        nowDate.getFullYear() +
+        "-" +
+        (nowDate.getMonth() + 1) +
+        "-" +
+        nowDate.getDate();
+      if (this.date == "昨日") {
+        day1.setTime(day1.getTime() - 24 * 60 * 60 * 1000);
+      } else if (this.date == "今日") {
+        day1.setTime(day1.getTime());
+      } else {
+        day1.setTime(day1.getTime() - 7 * 24 * 60 * 60 * 1000);
+      }
+      var date1 =
+        day1.getFullYear() + "-" + (day1.getMonth() + 1) + "-" + day1.getDate();
+      if (this.date == "今日" || this.date == "昨日") {
+        date = {
+          startTime: date1,
+          endTime: date1,
+        };
+      } else {
+        date = {
+          startTime: date1,
+          endTime: nowDate,
+        };
+      }
+      this.$emit("changeDate", date);
     },
   },
 };

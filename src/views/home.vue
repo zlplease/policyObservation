@@ -12,8 +12,8 @@
         {{ item }}
       </div>
     </div>
-    <Home v-if="page == '首页'"></Home>
-    <search v-if="page == '政策检索'"></search>
+    <Home v-if="page == '首页'" @searchKeywords="searchKeywords"></Home>
+    <search v-if="page == '政策检索'" :keyword="keyword"></search>
   </div>
 </template>
 
@@ -30,9 +30,16 @@ export default {
     return {
       items: ["首页", "政策检索", "政策大数据平台"],
       page: "首页",
+      keyword: ''
     };
   },
   methods: {
+    searchKeywords(val) {
+      if (val != '') {
+        this.page = '政策检索'
+        this.keyword = val
+      }
+    },
     choose (item) {
       if (item == "政策大数据平台") {
         console.log("跳转大数据平台");
