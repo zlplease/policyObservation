@@ -259,6 +259,7 @@ export default {
 
 .from,
 .industry {
+  cursor: pointer;
   font-size: 14px;
   font-weight: bold;
   padding: 4px 20px;
@@ -279,5 +280,12 @@ export default {
 
 .ant-table-tbody {
   height: 500px;
+}
+</style>
+
+<style>
+.ant-table-body {
+  height: calc(100vh - 48px - 24px - 191px - 64px - 54px - 48px) !important;
+  max-height: unset !important;
 }
 </style>
