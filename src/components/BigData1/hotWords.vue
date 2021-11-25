@@ -3,7 +3,9 @@
     <div class="topContainer">
       <dv-border-box-7 :color="['rgb(16,11,56)','#77dff5']"
                        class="acitivityContainer">
-        <div class="acitivity">
+        <dv-Loading v-if="provincesLoading">正在加载水位图</dv-Loading>
+        <div v-else
+             class="acitivity">
           <div class="title">{{provinces.province}}政策活跃度</div>
           <div class="title">共计 <div class="number">{{provinces.newPolicy}}</div> 个政策文件
           </div>
@@ -14,13 +16,20 @@
       </dv-border-box-7>
       <dv-border-box-7 :color="['rgb(16,11,56)','#77dff5']"
                        class="totalContainer">
-        <dv-scroll-board :config="total" />
+        <dv-Loading v-if="totalLoading">
+          正在加载热词排名动态图
+        </dv-Loading>
+        <dv-scroll-board v-else
+                         :config="total" />
       </dv-border-box-7>
       <dv-border-box-7 :color="['rgb(16,11,56)','#77dff5']"
                        class="proportionContainer">
         <div class="proportion">
-          <div class="title">福建热词分布Top5</div>
-          <dv-active-ring-chart :config="proportion"
+          <div class="title"
+               v-if="!loadingProportion">福建热词分布Top5</div>
+          <dv-Loading v-if="loadingProportion">正在热词Top5</dv-Loading>
+          <dv-active-ring-chart v-else
+                                :config="proportion"
                                 style="width:300px;height:300px" />
         </div>
       </dv-border-box-7>
@@ -29,7 +38,9 @@
       <dv-border-box-8 v-for="i in index"
                        :key="i"
                        class="border">
-        <div class="title">
+        <dv-Loading v-if="loadingItems">正在热词具体数据</dv-Loading>
+        <div class="title"
+             v-if="!loadingItems">
           <div class="left">
             {{proportion.data[i].name}}
           </div>
@@ -38,8 +49,10 @@
           </div>
         </div>
         <dv-charts class="circle"
-                   :option="items[i]" />
-        <div class="bottom">
+                   :option="items[i]"
+                   v-if="!loadingItems" />
+        <div class="bottom"
+             v-if="!loadingItems">
           <div class="numberContainer">
             <div class="title">
               共计出现
@@ -62,6 +75,10 @@ export default {
   name: 'acitivity',
   data () {
     return {
+      loadingProportion: true,
+      loadingItems: true,
+      totalLoading: true,
+      provincesLoading: true,
       hotWordsData: [
         {
           province: '福建',
@@ -93,10 +110,12 @@ export default {
       index: [0, 1, 2, 3, 4],
       provinces: {
         province: '福建',
-        newPolicy: '998,876',
-        data: [42],
+        newPolicy: '8790',
+        data: [40],
         shape: 'round'
       },
+      provincesList: [],
+      provincesListFlag: 0,
       total: {
         header: ['词汇', '福建省出现次数'],
         data: [
@@ -306,17 +325,23 @@ export default {
 
   methods: {
     change: function () {
-      this.provinces.province = '福建';
-      this.provinces.newPolicy = '112,413';
-      this.provinces.data = [15];
-      this.proportion.data = this.hotWordsData[0].hotWords;
-      for (let i = 0; i < 5; i++) {
-        this.items[i].series[0].data[0].value = this.hotWordsData[0].hotWordsitems[i];
-        this.items[i] = { ...this.items[i] };
+      this.provincesListFlag++
+      if (this.provincesListFlag >= this.provincesList.legnth) {
+        this.provincesListFlag %= this.provincesList.legnth
       }
-      this.items = { ...this.items }
-      this.proportion = { ...this.proportion }
+      this.provinces = this.provincesList[this.provincesListFlag]
       this.provinces = { ...this.provinces }
+      //   this.provinces.province = '福建';
+      //   this.provinces.newPolicy = '112,413';
+      //   this.provinces.data = [15];
+      //   this.proportion.data = this.hotWordsData[0].hotWords;
+      //   for (let i = 0; i < 5; i++) {
+      //     this.items[i].series[0].data[0].value = this.hotWordsData[0].hotWordsitems[i];
+      //     this.items[i] = { ...this.items[i] };
+      //   }
+      //   this.items = { ...this.items }
+      //   this.proportion = { ...this.proportion }
+      //   this.provinces = { ...this.provinces }
     }
   },
 
@@ -332,6 +357,7 @@ export default {
         }
         that.total.data = hotWords
         that.total = { ...that.total }
+        that.totalLoading = false
         //这边开始设置top5的数据
         for (let i = 0; i < 5; i++) {
           that.proportion.data[i] =
@@ -341,6 +367,7 @@ export default {
           }
         }
         that.proportion = { ...that.proportion }
+        that.loadingProportion = false
         //这边是下面的环图
         let top5 = [];
         let sum = 0
@@ -356,8 +383,24 @@ export default {
           that.items[i] = { ...that.items[i] };
         }
         that.items = { ...that.items }
+        this.loadingItems = false
         that.$emit("loadOver", true)
       })
+    //水位图、活跃度
+    this.$axios.get("http://39.103.169.155:8080/policy/rank?endTime=2025-01-01&startTime=1900-01-01")
+      .then(res => {
+        for (let item of res.data.data) {
+          that.provincesList.push({
+            province: item.province,
+            newPolicy: item.policyNum,
+            data: [item.vitality],
+            shape: 'round'
+          })
+        }
+      })
+    console.log(that.provincesList)
+    that.provincesLoading = false;
+    setInterval(this.change, 3000);
   }
 }
 

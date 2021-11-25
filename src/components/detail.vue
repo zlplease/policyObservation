@@ -2,7 +2,8 @@
   <div class="detail">
     <div class="timeShow">
       <div class="timeChoose">
-        <a-radio-group :value="date" @change="handleDateChange">
+        <a-radio-group :value="date"
+                       @change="handleDateChange">
           <a-radio-button value="今日"> 今日 </a-radio-button>
           <a-radio-button value="昨日"> 昨日 </a-radio-button>
           <a-radio-button value="最近7日"> 最近7日 </a-radio-button>
@@ -10,14 +11,15 @@
         <a-range-picker @change="onChange" />
       </div>
       <div class="rankTable">
-        <a-table
-          :columns="columns"
-          :data-source="rank"
-          :pagination="{ pageSize: 8 }"
-          size="small"
-        >
-          <a slot="name" slot-scope="text">{{ text }}</a>
-        </a-table>
+        <a-spin :spinning="spinning">
+          <a-table :columns="columns"
+                   :data-source="rank"
+                   :pagination="{ pageSize: 8 }"
+                   size="small">
+            <a slot="name"
+               slot-scope="text">{{ text }}</a>
+          </a-table>
+        </a-spin>
       </div>
     </div>
   </div>
@@ -30,8 +32,12 @@ export default {
       type: Array,
       required: true,
     },
+    spinning: {
+      type: Boolean,
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
       date: "今日",
       columns: [
@@ -131,14 +137,14 @@ export default {
     };
   },
   methods: {
-    onChange(date, dateString) {
+    onChange (date, dateString) {
       var date = {
         startTime: dateString[0],
         endTime: dateString[1],
       };
       this.$emit("changeDate", date);
     },
-    handleDateChange(e) {
+    handleDateChange (e) {
       this.date = e.target.value;
       console.log(this.date);
       var day1 = new Date();

@@ -1,7 +1,7 @@
 <template>
   <div class="data-view">
     <dv-full-screen-container class='bc'>
-      <!-- <dv-loading>
+      <!-- <dv-loading id="Loading">
         正在加载数据
       </dv-Loading> -->
       <headerPolicy>
@@ -35,7 +35,6 @@ export default {
   methods: {
     loadOver (data) {
       this.hotWordsIsLoading = true
-      console.log(this.hotWordsIsLoading)
     }
   },
   computed: {

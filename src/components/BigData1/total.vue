@@ -1,7 +1,11 @@
 <template>
   <dv-border-box-12 dur=10
                     class="totalContainerBorder">
-    <div class="totalContainer">
+    <dv-Loading v-if="loading">
+      正在加载政策总数
+    </dv-Loading>
+    <div v-else
+         class="totalContainer">
       <div class="item">
         <div class="title">
           政策总数
@@ -30,6 +34,7 @@ export default {
   name: 'total',
   data () {
     return {
+      loading: true,
       index: [0, 1, 2, 3, 4, 5],
       totalConfig1: [
         {
@@ -96,26 +101,59 @@ export default {
         },
       ],
       totalConfig: [],
-      totalFlag: 1
+      totalConfigs: [[], [], [], [], [], []],
+      totalFlag: 0
     };
   },
 
   methods: {
     changeTotalConfig () {
       this.totalFlag++;
-      if (this.totalFlag >= 3) {
-        this.totalFlag = this.totalFlag % 3;
-        this.totalFlag++;
+      if (this.totalFlag >= 6) {
+        this.totalFlag = this.totalFlag % 6;
       }
-      this.totalConfig = eval("this.totalConfig" + this.totalFlag)
+      this.totalConfig = this.totalConfigs[this.totalFlag]
     }
   },
   created: function () {
     this.totalConfig = this.totalConfig1;
-    this.totalFlag = 1;
-    setInterval(() => {
-      this.changeTotalConfig()
-    }, 2000)
+  },
+
+  mounted: function () {
+    //政策总数
+    let that = this
+    this.$axios.get("http://39.103.169.155:8080/policy/getTotalList")
+      .then(res => {
+        let map = res.data.data;
+        let i = 0, j = 0;
+        Object.keys(map).forEach(function (key) {
+          if (j == 6) {
+            j = 0;
+            i++;
+          }
+          j++
+          that.totalConfigs[i].push({
+            province: key,
+            number: [map[key]],
+            content: '{nt}'
+          })
+        })
+        that.totalConfigs[i].push({
+          province: '',
+          number: [],
+          content: '{nt}'
+        })
+        that.totalConfigs[i].push({
+          province: '',
+          number: [],
+          content: '{nt}'
+        })
+        this.totalConfig = this.totalConfigs[0]
+        this.loading = false
+        setInterval(() => {
+          this.changeTotalConfig()
+        }, 2000)
+      })
   }
 }
 
