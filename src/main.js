@@ -1,17 +1,16 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
+import Antd from "ant-design-vue";
+import "ant-design-vue/dist/antd.css";
+import vuescroll from "vuescroll"; //引入vuescroll
+import "vuescroll/dist/vuescroll.css"; //引入vuescroll样式
 import App from "./App";
 import router from "./router";
 import ArrayFunction from "./function/ArrayFunction";
 
 Vue.config.productionTip = false;
 import dataV from "@jiaminghi/data-view";
-
-import Antd from "ant-design-vue";
-import "ant-design-vue/dist/antd.css";
-import vuescroll from "vuescroll"; //引入vuescroll
-import "vuescroll/dist/vuescroll.css"; //引入vuescroll样式
 
 import axios from "axios";
 import VueAxios from "vue-axios";
