@@ -5,85 +5,74 @@
       <div class="area">
         <div class="name">地区范围:</div>
         <div>
-          <a-select
-            class="select"
-            default-value="福建"
-            style="width: 120px"
-            @change="handleChange"
-          >
-            <a-select-option
-              :value="item"
-              v-for="item in province"
-              :key="item.code"
-            >
+          <a-select class="select"
+                    default-value="全部"
+                    style="width: 120px"
+                    @change="handleChange">
+            <a-select-option :value="item"
+                             v-for="item in province"
+                             :key="item.code">
               {{ item }}
             </a-select-option>
           </a-select>
         </div>
         <div>
-          <a-select
-            class="select"
-            :default-value="city"
-            style="width: 120px"
-            @change="handleChange"
-          >
-            <a-select-option
-              :value="item"
-              v-for="item in city"
-              :key="item.code"
-            >
+          <!-- <a-select class="select"
+                    :default-value="city"
+                    style="width: 120px"
+                    @change="handleChange">
+            <a-select-option :value="item"
+                             v-for="item in city"
+                             :key="item.code">
               {{ item }}
             </a-select-option>
-          </a-select>
+          </a-select> -->
         </div>
       </div>
       <div class="source">
         <div class="name">信息来源:</div>
-        <div
-          class="from"
-          :class="{ selected: selectFrom == item }"
-          v-for="(item, key) in source"
-          :key="key"
-          @click="choose(item)"
-        >
+        <div class="from"
+             :class="{ selected: selectFrom == item }"
+             v-for="(item, key) in source"
+             :key="key"
+             @click="choose(item)">
           {{ item }}
         </div>
       </div>
-      <div class="industries">
+      <!-- <div class="industries">
         <div class="name">相关产业:</div>
-        <div
-          class="industry"
-          :class="{ selected: selectIndustry == item }"
-          v-for="item in industry"
-          :key="item.key"
-          @click="choose1(item)"
-        >
+        <div class="industry"
+             :class="{ selected: selectIndustry == item }"
+             v-for="item in industry"
+             :key="item.key"
+             @click="choose1(item)">
           {{ item }}
         </div>
-      </div>
+      </div> -->
       <div class="searchInput">
         <div class="title">关键词</div>
-        <a-input
-          placeholder="请输入关键词"
-          v-model="keyword"
-          value="keyword"
-          @change="onChange"
-        />
-        <a-button class="btn" @click="search">搜素</a-button>
+        <a-input placeholder="请输入关键词"
+                 v-model="keyword"
+                 value="keyword"
+                 @change="onChange" />
+        <a-button class="btn"
+                  @click="search">搜素</a-button>
       </div>
     </div>
     <div class="bottom">
-      <a-table
-        :columns="columns"
-        :data-source="dataInfo"
-        rowKey="{record=>record.id}"
-        :pagination="{ pageSize: 10 }"
-        :scroll="{ y: 240 }"
-      >
-        <div slot="action" slot-scope="text, record">
-          <a-button type="primary" @click="jumpTo(record)">查看详情</a-button>
-        </div>
-      </a-table>
+      <a-spin :spinning="searchLoading">
+        <a-table :columns="columns"
+                 :data-source="dataInfo"
+                 rowKey="{record=>record.id}"
+                 :pagination="{ pageSize: 10 }"
+                 :scroll="{ y: 240 }">
+          <div slot="action"
+               slot-scope="text, record">
+            <a-button type="primary"
+                      @click="jumpTo(record)">查看详情</a-button>
+          </div>
+        </a-table>
+      </a-spin>
     </div>
   </div>
 </template>
@@ -96,10 +85,11 @@ export default {
       default: "",
     },
   },
-  data() {
+  data () {
     return {
+      searchLoading: false,
       province: ["北京", "上海", "河北", "辽宁", "吉林", "福建"],
-      city: ["福州", "厦门", "莆田"],
+      //   city: ["福州", "厦门", "莆田"],
       source: ["全部", "福建省人民政府", "福建省发改委", "福建省科学技术厅"],
       industry: ["全部", "互联网", "新能源", "生命科学", "节能环保"],
       selectFrom: "全部",
@@ -126,28 +116,32 @@ export default {
         }
       ],
       dataInfo: [],
+      allDataInfo: [],
     };
   },
   methods: {
-    jumpTo(e) {
+    jumpTo (e) {
       var url = e.url
-      window.open(url,'_blank')
+      window.open(url, '_blank')
     },
-    onChange(e) {
+    onChange (e) {
       console.log(e);
     },
-    handleChange(value) {
+    handleChange (value) {
       console.log(`selected ${value}`);
+      this.dataInfo = this.allDataInfo.filterByProvince(value);
     },
-    choose(value) {
+    choose (value) {
       this.selectFrom = value;
       console.log(value)
+      this.dataInfo = this.allDataInfo.filterByString(value);
     },
-    choose1(value) {
+    choose1 (value) {
       this.selectIndustry = value;
       console.log(value)
     },
-    search() {
+    search () {
+      this.searchLoading = true;
       var keyword = this.keyword;
       this.$axios
         .post(
@@ -161,15 +155,26 @@ export default {
         .then((res) => {
           var records = res.data.data.records;
           var dataInfo = [];
+          this.source = ["全部"];
+          this.province = ["全部"];
           for (var item of records) {
             var temp = {};
             temp["title"] = item.title;
             temp["publicUnit"] = item.publicUnit;
             temp["publicTime"] = item.publicTime;
             temp["url"] = item.url;
+            temp["province"] = item.province
             dataInfo.push(temp);
+            if (this.source.length < 5 && !(this.source.indexOf(item.publicUnit) + 1)) {
+              this.source.push(item.publicUnit)
+            }
+            if (!(this.province.indexOf(item.province) + 1)) {
+              this.province.push(item.province)
+            }
           }
           this.dataInfo = dataInfo;
+          this.allDataInfo = dataInfo
+          this.searchLoading = false;
         });
     },
   },

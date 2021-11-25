@@ -70,5 +70,26 @@ export default {
         this[i] = tempArr[i];
       }
     };
+
+    Array.prototype.filterByString = function(value) {
+      console.log(this);
+      console.log(value);
+      if (value == "全部") return this;
+      let tempArr = [];
+      for (let i = 0; i < this.length; i++) {
+        if (this[i].publicUnit == value) tempArr.push(this[i]);
+      }
+      return tempArr;
+    };
+    Array.prototype.filterByProvince = function(value) {
+      console.log(this);
+      console.log(value);
+      if (value == "全部") return this;
+      let tempArr = [];
+      for (let i = 0; i < this.length; i++) {
+        if (this[i].province == value) tempArr.push(this[i]);
+      }
+      return tempArr;
+    };
   }
 };
