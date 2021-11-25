@@ -326,9 +326,10 @@ export default {
   methods: {
     change: function () {
       this.provincesListFlag++
-      if (this.provincesListFlag >= this.provincesList.legnth) {
-        this.provincesListFlag %= this.provincesList.legnth
+      if (this.provincesListFlag >= this.provincesList.length) {
+        this.provincesListFlag %= this.provincesList.length
       }
+      console.log(this.provincesList.length)
       this.provinces = this.provincesList[this.provincesListFlag]
       this.provinces = { ...this.provinces }
       //   this.provinces.province = '福建';
@@ -398,7 +399,6 @@ export default {
           })
         }
       })
-    console.log(that.provincesList)
     that.provincesLoading = false;
     setInterval(this.change, 3000);
   }
