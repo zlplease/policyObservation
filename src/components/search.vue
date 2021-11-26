@@ -5,13 +5,8 @@
       <div class="area">
         <div class="name">地区范围:</div>
         <div>
-          <a-select class="select"
-                    default-value="全部"
-                    style="width: 120px"
-                    @change="handleChange">
-            <a-select-option :value="item"
-                             v-for="item in province"
-                             :key="item.code">
+          <a-select class="select" :value="selectProvince" default-value="全部" style="width: 120px" @change="handleChange">
+            <a-select-option :value="item" v-for="item in province" :key="item.code">
               {{ item }}
             </a-select-option>
           </a-select>
@@ -31,11 +26,7 @@
       </div>
       <div class="source">
         <div class="name">信息来源:</div>
-        <div class="from"
-             :class="{ selected: selectFrom == item }"
-             v-for="(item, key) in source"
-             :key="key"
-             @click="choose(item)">
+        <div class="from" :class="{ selected: selectFrom == item }" v-for="(item, key) in source" :key="key" @click="choose(item)">
           {{ item }}
         </div>
       </div>
@@ -51,25 +42,15 @@
       </div> -->
       <div class="searchInput">
         <div class="title">关键词</div>
-        <a-input placeholder="请输入关键词"
-                 v-model="keyword"
-                 value="keyword"
-                 @change="onChange" />
-        <a-button class="btn"
-                  @click="search">搜素</a-button>
+        <a-input placeholder="请输入关键词" v-model="keyword" value="keyword" @change="onChange" />
+        <a-button class="btn" @click="search">搜素</a-button>
       </div>
     </div>
     <div class="bottom">
       <a-spin :spinning="searchLoading">
-        <a-table :columns="columns"
-                 :data-source="dataInfo"
-                 rowKey="{record=>record.id}"
-                 :pagination="{ pageSize: 10 }"
-                 :scroll="{ y: 240 }">
-          <div slot="action"
-               slot-scope="text, record">
-            <a-button type="primary"
-                      @click="jumpTo(record)">查看详情</a-button>
+        <a-table :columns="columns" :data-source="dataInfo" rowKey="{record=>record.id}" :pagination="{ pageSize: 10 }" :scroll="{ y: 350 }">
+          <div slot="action" slot-scope="text, record">
+            <a-button type="primary" @click="jumpTo(record)">查看详情</a-button>
           </div>
         </a-table>
       </a-spin>
@@ -94,6 +75,7 @@ export default {
       industry: ["全部", "互联网", "新能源", "生命科学", "节能环保"],
       selectFrom: "全部",
       selectIndustry: "全部",
+      selectProvince: "全部",
       columns: [
         {
           title: "政策名称",
@@ -129,12 +111,23 @@ export default {
     },
     handleChange (value) {
       console.log(`selected ${value}`);
-      this.dataInfo = this.allDataInfo.filterByProvince(value);
+      this.selectProvince = value
+      this.dataInfo = this.allDataInfo.filterByProvince(this.selectProvince).filterByString(this.selectFrom)
+      this.source = ["全部"]
+      this.choose('全部')
+      for (let item of this.dataInfo) {
+        if (this.source.length < 5 && !(this.source.indexOf(item.publicUnit) + 1) && !(item.publicUnit.indexOf('无发文机关') + 1)
+          && item.publicUnit != ""
+        ) {
+          this.source.push(item.publicUnit)
+        }
+        else if (this.source.length >= 5) break;
+      }
     },
     choose (value) {
       this.selectFrom = value;
       console.log(value)
-      this.dataInfo = this.allDataInfo.filterByString(value);
+      this.dataInfo = this.allDataInfo.filterByProvince(this.selectProvince).filterByString(this.selectFrom)
     },
     choose1 (value) {
       this.selectIndustry = value;
@@ -148,7 +141,7 @@ export default {
           "/dpp-policy/search/title/ByWord",
           JSON.stringify({
             page: 1,
-            size: 100,
+            size: 300,
             word: keyword,
           })
         )
@@ -157,6 +150,8 @@ export default {
           var dataInfo = [];
           this.source = ["全部"];
           this.province = ["全部"];
+          this.selectFrom = "全部"
+          this.selectProvince = "全部"
           for (var item of records) {
             var temp = {};
             temp["title"] = item.title;
@@ -180,7 +175,7 @@ export default {
   },
   mounted: function () {
     console.log("hello");
-    this.search();
+    //this.search();
   },
 };
 </script>
@@ -280,12 +275,5 @@ export default {
 
 .ant-table-tbody {
   height: 500px;
-}
-</style>
-
-<style>
-.ant-table-body {
-  height: calc(100vh - 48px - 24px - 191px - 64px - 54px - 48px) !important;
-  max-height: unset !important;
 }
 </style>
